@@ -1,8 +1,11 @@
 {
   "name": "it-handshake",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Create handshakes for binary protocols with iterable streams.",
   "main": "index.js",
+  "files": [
+    "index.js"
+  ],
   "keywords": [
     "async",
     "iterable",
