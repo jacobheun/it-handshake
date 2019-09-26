@@ -1,4 +1,5 @@
 'use strict'
+/* eslint no-console: ["error", { allow: ["log"] }] */
 
 const pipe = require('it-pipe')
 const duplex = require('it-pair/duplex')

@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "Create handshakes for binary protocols with iterable streams.",
   "main": "index.js",
+  "keywords": [
+    "async",
+    "iterable",
+    "iterator",
+    "handshake"
+  ],
   "scripts": {
     "test": "aegir test -t node -t browser",
     "test:browser": "aegir test -t browser",
@@ -14,11 +20,8 @@
     "build": "aegir build",
     "coverage": "nyc --reporter=text --reporter=lcov npm run test:node"
   },
-  "keywords": [
-    "async",
-    "iterable",
-    "iterator",
-    "handshake"
+  "pre-push": [
+    "lint"
   ],
   "author": "Jacob Heun",
   "license": "MIT",

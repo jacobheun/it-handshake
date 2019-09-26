@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 'use strict'
 
 const { expect } = require('chai')
@@ -78,8 +79,6 @@ describe('handshake', () => {
     const data = await pipe([buffer], iShake2.stream, toBuffer, collect)
     expect(data).to.eql([buffer])
   })
-
-
 
   it('should persist data across handshakes', async () => {
     const [initiator, responder] = duplex()
