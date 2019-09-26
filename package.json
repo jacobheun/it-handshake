@@ -2,9 +2,10 @@
   "name": "it-handshake",
   "version": "0.0.0",
   "description": "Create handshakes for binary protocols with iterable streams.",
-  "main": "index.js",
+  "main": "./src/index.js",
   "files": [
-    "index.js"
+    "src",
+    "dist"
   ],
   "keywords": [
     "async",
@@ -13,8 +14,8 @@
     "handshake"
   ],
   "scripts": {
-    "test": "aegir test -t node -t browser",
-    "test:browser": "aegir test -t browser",
+    "test": "aegir test -t node -t browser -t webworker",
+    "test:browser": "aegir test -t browser -t webworker",
     "test:node": "aegir test -t node",
     "lint": "aegir lint",
     "release": "aegir release -t node -t browser",
