@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Create handshakes for binary protocols with iterable streams.",
   "main": "./src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacobheun/it-handshake.git"
+  },
   "files": [
     "src",
     "dist"
