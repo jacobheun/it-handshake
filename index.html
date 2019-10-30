@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>it-handshake 1.0.1 | Documentation</title>
+  <meta name='description' content='Create handshakes for binary protocols with iterable streams.'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='assets/bass.css' rel='stylesheet'>
+  <link href='assets/style.css' rel='stylesheet'>
+  <link href='assets/github.css' rel='stylesheet'>
+  <link href='assets/split.css' rel='stylesheet'>
+</head>
+<body class='documentation m0'>
+    <div class='flex'>
+      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
+        <div class='py1 px2'>
+          <h3 class='mb0 no-anchor'>it-handshake</h3>
+          <div class='mb1'><code>1.0.1</code></div>
+          <input
+            placeholder='Filter'
+            id='filter-input'
+            class='col12 block input'
+            type='text' />
+          <div id='toc'>
+            <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#intro'
+                  class="h5 bold black caps">
+                  Intro
+                  
+                </a>
+                
+                </li>
+              
+            </ul>
+          </div>
+          <div class='mt1 h6 quiet'>
+            <a href='https://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          </div>
+        </div>
+      </div>
+      <div id='split-right' class='relative overflow-auto height-viewport-100'>
+        
+          
+            <div class='keyline-top-not py2'><section class='py2 clearfix'>
+
+  <h2 id='intro' class='mt0'>
+    Intro
+  </h2>
+
+  
+    <p>Installable via  <code>npm install --save it-handshake</code>, it can also be used directly in the browser.</p>
+<h2>Quick Example</h2>
+<pre class='hljs'><span class="hljs-meta">'use strict'</span>
+<span class="hljs-comment">/* eslint no-console: ["error", { allow: ["log"] }] */</span>
+
+<span class="hljs-keyword">const</span> pipe = <span class="hljs-built_in">require</span>(<span class="hljs-string">'it-pipe'</span>)
+<span class="hljs-keyword">const</span> duplex = <span class="hljs-built_in">require</span>(<span class="hljs-string">'it-pair/duplex'</span>)
+<span class="hljs-keyword">const</span> handshake = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./'</span>)
+
+;<span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">async</span> (</span>) =&gt;</span> {
+  <span class="hljs-comment">// Create connected duplex streams</span>
+  <span class="hljs-keyword">const</span> [client, server] = duplex()
+  <span class="hljs-keyword">const</span> clientShake = handshake(client)
+  <span class="hljs-keyword">const</span> serverShake = handshake(server)
+
+  clientShake.write(<span class="hljs-string">'hello'</span>)
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'client: %s'</span>, <span class="hljs-keyword">await</span> serverShake.read())
+  <span class="hljs-comment">// &gt; client: hello</span>
+  serverShake.write(<span class="hljs-string">'hi'</span>)
+  serverShake.rest() <span class="hljs-comment">// the server has finished the handshake</span>
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'server: %s'</span>, <span class="hljs-keyword">await</span> clientShake.read())
+  <span class="hljs-comment">// &gt; server: hi</span>
+  clientShake.rest() <span class="hljs-comment">// the client has finished the handshake</span>
+
+  <span class="hljs-comment">// Make the server echo responses</span>
+  pipe(
+    serverShake.stream,
+    (source) =&gt; (<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> * (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> message <span class="hljs-keyword">of</span> source) {
+        <span class="hljs-keyword">yield</span> message
+      }
+    })(),
+    serverShake.stream
+  )
+
+  <span class="hljs-comment">// Send and receive an echo through the handshake stream</span>
+  pipe(
+    [<span class="hljs-string">'echo'</span>],
+    clientShake.stream,
+    (source) =&gt; <span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">async</span> (</span>) =&gt;</span> {
+      <span class="hljs-keyword">for</span> <span class="hljs-keyword">await</span> (<span class="hljs-keyword">const</span> bufferList <span class="hljs-keyword">of</span> source) {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Echo response: %s'</span>, bufferList.slice())
+        <span class="hljs-comment">// &gt; Echo response: echo</span>
+      }
+    })()
+  )
+})()</pre>
+<p>There are more available, so take a look at the docs below for a full list. This documentation aims to be comprehensive, so if you feel anything is missing please create a GitHub issue for it.</p>
+<h2>Download</h2>
+<p>The source is available for download from <a href="git+https://github.com/jacobheun/it-handshake.git">GitHub</a>. Alternatively, you can install using npm:</p>
+<pre class='hljs'>$ npm install --save it-handshake</pre>
+<p>You can then <code>require()</code> it-handshake as normal:</p>
+<pre class='hljs'><span class="hljs-keyword">const</span> itHandshake = <span class="hljs-built_in">require</span>(<span class="hljs-string">'it-handshake'</span>)</pre>
+<h2>In the Browser</h2>
+<p>It-handshake should work in any ES2015 environment out of the box.</p>
+<p>Usage:</p>
+<pre class='hljs'><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"index.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></pre>
+<p>The portable versions of it-handshake, including <code>index.js</code> and <code>index.min.js</code>, are included in the <code>/dist</code> folder. It-handshake can also be found on <a href="https://unpkg.com">unpkg.com</a> under</p>
+<ul>
+<li><a href="https://unpkg.com/it-handshake/dist/index.min.js">https://unpkg.com/it-handshake/dist/index.min.js</a></li>
+<li><a href="https://unpkg.com/it-handshake/dist/index.js">https://unpkg.com/it-handshake/dist/index.js</a></li>
+</ul>
+
+  
+</section></div>
+          
+        
+      </div>
+    </div>
+  <script src='assets/anchor.js'></script>
+  <script src='assets/split.js'></script>
+  <script src='assets/site.js'></script>
+</body>
+</html>
