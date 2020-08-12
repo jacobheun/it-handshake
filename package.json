@@ -1,6 +1,6 @@
 {
   "name": "it-handshake",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Create handshakes for binary protocols with iterable streams.",
   "main": "./src/index.js",
   "repository": {
@@ -46,6 +46,7 @@
     "uint8arrays": "^1.1.0"
   },
   "contributors": [
-    "Jacob Heun <jacobheun@gmail.com>"
+    "Jacob Heun <jacobheun@gmail.com>",
+    "Alex Potsides <alex@achingbrain.net>"
   ]
 }
