@@ -11,6 +11,7 @@ module.exports = stream => {
 
   // Waits for a source to be passed to the rest stream's sink
   const sourcePromise = defer()
+  let sinkErr
 
   const sinkPromise = stream.sink((async function * () {
     yield * writer
@@ -18,8 +19,16 @@ module.exports = stream => {
     yield * source
   })())
 
+  sinkPromise.catch(err => {
+    sinkErr = err
+  })
+
   const rest = {
     sink: source => {
+      if (sinkErr) {
+        return Promise.reject(sinkErr)
+      }
+
       sourcePromise.resolve(source)
       return sinkPromise
     },

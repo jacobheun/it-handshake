@@ -1,12 +1,13 @@
 /* eslint-env mocha */
 'use strict'
 
-const { expect } = require('chai')
+const { expect } = require('aegir/utils/chai')
 const handshake = require('../')
 const duplex = require('it-pair/duplex')
 const pipe = require('it-pipe')
 const { map, collect } = require('streaming-iterables')
 const toBuffer = map(c => c.slice())
+const uint8ArrayFromString = require('uint8arrays/from-string')
 
 describe('handshake', () => {
   it('should be able to perform a handshake', async () => {
@@ -16,14 +17,14 @@ describe('handshake', () => {
 
     iShake.write('hello')
     let message = await rShake.read()
-    expect(message.slice()).to.eql(Buffer.from('hello'))
+    expect(message.slice()).to.eql(uint8ArrayFromString('hello'))
     rShake.write('hi')
     rShake.rest()
     message = await iShake.read()
-    expect(message.slice()).to.eql(Buffer.from('hi'))
+    expect(message.slice()).to.eql(uint8ArrayFromString('hi'))
     iShake.rest()
 
-    const buffer = Buffer.from('more data')
+    const buffer = uint8ArrayFromString('more data')
     pipe(
       rShake.stream,
       (source) => (async function * () {
@@ -46,11 +47,11 @@ describe('handshake', () => {
 
     iShake.write('hello')
     let message = await rShake.read()
-    expect(message.slice()).to.eql(Buffer.from('hello'))
+    expect(message.slice()).to.eql(uint8ArrayFromString('hello'))
     rShake.write('hi')
     rShake.rest()
     message = await iShake.read()
-    expect(message.slice()).to.eql(Buffer.from('hi'))
+    expect(message.slice()).to.eql(uint8ArrayFromString('hi'))
     iShake.rest()
 
     const iShake2 = handshake(iShake.stream)
@@ -58,11 +59,11 @@ describe('handshake', () => {
 
     iShake2.write('ready?')
     message = await rShake2.read()
-    expect(message.slice()).to.eql(Buffer.from('ready?'))
+    expect(message.slice()).to.eql(uint8ArrayFromString('ready?'))
     rShake2.write('yes!')
     rShake2.rest()
     message = await iShake2.read()
-    expect(message.slice()).to.eql(Buffer.from('yes!'))
+    expect(message.slice()).to.eql(uint8ArrayFromString('yes!'))
     iShake2.rest()
 
     pipe(
@@ -75,7 +76,7 @@ describe('handshake', () => {
       rShake2.stream
     )
 
-    const buffer = Buffer.from('more data')
+    const buffer = uint8ArrayFromString('more data')
     const data = await pipe([buffer], iShake2.stream, toBuffer, collect)
     expect(data).to.eql([buffer])
   })
@@ -90,10 +91,10 @@ describe('handshake', () => {
     // handshake before the responder finishes
     iShake.write('hello')
     message = await rShake.read()
-    expect(message.slice()).to.eql(Buffer.from('hello'))
+    expect(message.slice()).to.eql(uint8ArrayFromString('hello'))
     rShake.write('hi')
     message = await iShake.read()
-    expect(message.slice()).to.eql(Buffer.from('hi'))
+    expect(message.slice()).to.eql(uint8ArrayFromString('hi'))
     iShake.rest()
 
     const iShake2 = handshake(iShake.stream)
@@ -103,11 +104,11 @@ describe('handshake', () => {
     const rShake2 = handshake(rShake.stream)
 
     message = await rShake2.read()
-    expect(message.slice()).to.eql(Buffer.from('ready?'))
+    expect(message.slice()).to.eql(uint8ArrayFromString('ready?'))
     rShake2.write('yes!')
     rShake2.rest()
     message = await iShake2.read()
-    expect(message.slice()).to.eql(Buffer.from('yes!'))
+    expect(message.slice()).to.eql(uint8ArrayFromString('yes!'))
     iShake2.rest()
 
     pipe(
@@ -120,8 +121,26 @@ describe('handshake', () => {
       rShake2.stream
     )
 
-    const buffer = Buffer.from('more data')
+    const buffer = uint8ArrayFromString('more data')
     const data = await pipe([buffer], iShake2.stream, toBuffer, collect)
     expect(data).to.eql([buffer])
+  })
+
+  it('should survive an exploding sink while doing other async work', async () => {
+    const shake = handshake({
+      sink: async () => { // eslint-disable-line require-await
+        throw new Error('Oh noes!')
+      },
+      source: () => {
+
+      }
+    })
+
+    // make sure the microtask queue is emptied
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100)
+    })
+
+    expect(shake.stream.sink()).to.eventually.be.rejectedWith(/Oh noes!/)
   })
 })

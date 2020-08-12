@@ -39,12 +39,11 @@
     "p-defer": "^3.0.0"
   },
   "devDependencies": {
-    "aegir": "^20.4.1",
-    "chai": "^4.2.0",
+    "aegir": "^25.1.0",
     "it-pair": "^1.0.0",
     "it-pipe": "^1.1.0",
-    "random-bytes": "^1.0.0",
-    "streaming-iterables": "^4.1.0"
+    "streaming-iterables": "^5.0.2",
+    "uint8arrays": "^1.1.0"
   },
   "contributors": [
     "Jacob Heun <jacobheun@gmail.com>"
