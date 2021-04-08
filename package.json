@@ -35,15 +35,15 @@
   "license": "MIT",
   "dependencies": {
     "it-pushable": "^1.4.0",
-    "it-reader": "^2.0.0",
+    "it-reader": "^3.0.0",
     "p-defer": "^3.0.0"
   },
   "devDependencies": {
-    "aegir": "^25.1.0",
+    "aegir": "^33.0.0",
     "it-pair": "^1.0.0",
     "it-pipe": "^1.1.0",
     "streaming-iterables": "^5.0.2",
-    "uint8arrays": "^1.1.0"
+    "uint8arrays": "^2.1.4"
   },
   "contributors": [
     "Jacob Heun <jacobheun@gmail.com>",
