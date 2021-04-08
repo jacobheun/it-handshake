@@ -1,3 +1,7 @@
+# [2.0.0](https://github.com/jacobheun/it-handshake/compare/v1.0.2...v2.0.0) (2021-04-08)
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/jacobheun/it-handshake/compare/v1.0.1...v1.0.2) (2020-08-12)
 
