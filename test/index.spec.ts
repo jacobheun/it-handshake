@@ -1,31 +1,27 @@
-/* eslint-env mocha */
-'use strict'
-
-const { expect } = require('aegir/utils/chai')
-const handshake = require('../')
-const duplex = require('it-pair/duplex')
-const pipe = require('it-pipe')
-const { map, collect } = require('streaming-iterables')
-const toBuffer = map(c => c.slice())
-const uint8ArrayFromString = require('uint8arrays/from-string')
+import { expect } from 'aegir/utils/chai.js'
+import { handshake } from '../src/index.js'
+import { duplexPair } from 'it-pair/duplex'
+import { pipe } from 'it-pipe'
+import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
+import all from 'it-all'
 
 describe('handshake', () => {
   it('should be able to perform a handshake', async () => {
-    const [initiator, responder] = duplex()
+    const [initiator, responder] = duplexPair<Uint8Array>()
     const iShake = handshake(initiator)
     const rShake = handshake(responder)
 
-    iShake.write('hello')
+    iShake.write(uint8ArrayFromString('hello'))
     let message = await rShake.read()
     expect(message.slice()).to.eql(uint8ArrayFromString('hello'))
-    rShake.write('hi')
+    rShake.write(uint8ArrayFromString('hi'))
     rShake.rest()
     message = await iShake.read()
     expect(message.slice()).to.eql(uint8ArrayFromString('hi'))
     iShake.rest()
 
     const buffer = uint8ArrayFromString('more data')
-    pipe(
+    void pipe(
       rShake.stream,
       (source) => (async function * () {
         for await (const message of source) {
@@ -36,19 +32,19 @@ describe('handshake', () => {
       rShake.stream
     )
 
-    const data = await pipe([buffer], iShake.stream, toBuffer, collect)
+    const data = await pipe([buffer], iShake.stream, async (source) => await all(source))
     expect(data).to.eql([buffer])
   })
 
   it('should be able to perform consecutive handshakes', async () => {
-    const [initiator, responder] = duplex()
+    const [initiator, responder] = duplexPair<Uint8Array>()
     const iShake = handshake(initiator)
     const rShake = handshake(responder)
 
-    iShake.write('hello')
+    iShake.write(uint8ArrayFromString('hello'))
     let message = await rShake.read()
     expect(message.slice()).to.eql(uint8ArrayFromString('hello'))
-    rShake.write('hi')
+    rShake.write(uint8ArrayFromString('hi'))
     rShake.rest()
     message = await iShake.read()
     expect(message.slice()).to.eql(uint8ArrayFromString('hi'))
@@ -57,16 +53,16 @@ describe('handshake', () => {
     const iShake2 = handshake(iShake.stream)
     const rShake2 = handshake(rShake.stream)
 
-    iShake2.write('ready?')
+    iShake2.write(uint8ArrayFromString('ready?'))
     message = await rShake2.read()
     expect(message.slice()).to.eql(uint8ArrayFromString('ready?'))
-    rShake2.write('yes!')
+    rShake2.write(uint8ArrayFromString('yes!'))
     rShake2.rest()
     message = await iShake2.read()
     expect(message.slice()).to.eql(uint8ArrayFromString('yes!'))
     iShake2.rest()
 
-    pipe(
+    void pipe(
       rShake2.stream,
       (source) => (async function * () {
         for await (const message of source) {
@@ -77,41 +73,41 @@ describe('handshake', () => {
     )
 
     const buffer = uint8ArrayFromString('more data')
-    const data = await pipe([buffer], iShake2.stream, toBuffer, collect)
+    const data = await pipe([buffer], iShake2.stream, async (source) => await all(source))
     expect(data).to.eql([buffer])
   })
 
   it('should persist data across handshakes', async () => {
-    const [initiator, responder] = duplex()
+    const [initiator, responder] = duplexPair<Uint8Array>()
     const iShake = handshake(initiator)
     const rShake = handshake(responder)
     let message
 
     // Send the hello, read from the responder and then start the next
     // handshake before the responder finishes
-    iShake.write('hello')
+    iShake.write(uint8ArrayFromString('hello'))
     message = await rShake.read()
     expect(message.slice()).to.eql(uint8ArrayFromString('hello'))
-    rShake.write('hi')
+    rShake.write(uint8ArrayFromString('hi'))
     message = await iShake.read()
     expect(message.slice()).to.eql(uint8ArrayFromString('hi'))
     iShake.rest()
 
     const iShake2 = handshake(iShake.stream)
-    iShake2.write('ready?')
+    iShake2.write(uint8ArrayFromString('ready?'))
 
     rShake.rest()
     const rShake2 = handshake(rShake.stream)
 
     message = await rShake2.read()
     expect(message.slice()).to.eql(uint8ArrayFromString('ready?'))
-    rShake2.write('yes!')
+    rShake2.write(uint8ArrayFromString('yes!'))
     rShake2.rest()
     message = await iShake2.read()
     expect(message.slice()).to.eql(uint8ArrayFromString('yes!'))
     iShake2.rest()
 
-    pipe(
+    void pipe(
       rShake2.stream,
       (source) => (async function * () {
         for await (const message of source) {
@@ -122,8 +118,8 @@ describe('handshake', () => {
     )
 
     const buffer = uint8ArrayFromString('more data')
-    const data = await pipe([buffer], iShake2.stream, toBuffer, collect)
-    expect(data).to.eql([buffer])
+    const data = await pipe([buffer], iShake2.stream, async (source) => await all(source))
+    expect(data).to.have.nested.property('[0]').that.equalBytes(buffer)
   })
 
   it('should survive an exploding sink while doing other async work', async () => {
@@ -131,9 +127,7 @@ describe('handshake', () => {
       sink: async () => { // eslint-disable-line require-await
         throw new Error('Oh noes!')
       },
-      source: () => {
-
-      }
+      source: []
     })
 
     // make sure the microtask queue is emptied
@@ -141,6 +135,6 @@ describe('handshake', () => {
       setTimeout(resolve, 100)
     })
 
-    expect(shake.stream.sink()).to.eventually.be.rejectedWith(/Oh noes!/)
+    await expect(shake.stream.sink([])).to.eventually.be.rejectedWith(/Oh noes!/)
   })
 })

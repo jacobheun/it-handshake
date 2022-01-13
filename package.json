@@ -1,52 +1,145 @@
 {
   "name": "it-handshake",
   "version": "2.0.0",
-  "description": "Create handshakes for binary protocols with iterable streams.",
-  "main": "./src/index.js",
+  "description": "Create handshakes for binary protocols with iterable streams",
+  "type": "module",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "src",
+    "dist/src",
+    "!dist/test",
+    "!**/*.tsbuildinfo"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/src/index.js"
+    }
+  },
+  "eslintConfig": {
+    "extends": "ipfs",
+    "parserOptions": {
+      "sourceType": "module"
+    }
+  },
+  "release": {
+    "branches": [
+      "master"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits",
+          "releaseRules": [
+            {
+              "breaking": true,
+              "release": "major"
+            },
+            {
+              "revert": true,
+              "release": "patch"
+            },
+            {
+              "type": "feat",
+              "release": "minor"
+            },
+            {
+              "type": "fix",
+              "release": "patch"
+            },
+            {
+              "type": "chore",
+              "release": "patch"
+            },
+            {
+              "type": "docs",
+              "release": "patch"
+            },
+            {
+              "type": "test",
+              "release": "patch"
+            },
+            {
+              "scope": "no-release",
+              "release": false
+            }
+          ]
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits",
+          "presetConfig": {
+            "types": [
+              {
+                "type": "feat",
+                "section": "Features"
+              },
+              {
+                "type": "fix",
+                "section": "Bug Fixes"
+              },
+              {
+                "type": "chore",
+                "section": "Trivial Changes"
+              },
+              {
+                "type": "docs",
+                "section": "Trivial Changes"
+              },
+              {
+                "type": "test",
+                "section": "Tests"
+              }
+            ]
+          }
+        }
+      ],
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      "@semantic-release/git"
+    ]
+  },
+  "scripts": {
+    "lint": "aegir lint",
+    "dep-check": "aegir dep-check dist/src/**/*.js dist/test/**/*.js",
+    "build": "tsc",
+    "pretest": "npm run build",
+    "test": "aegir test -f ./dist/test",
+    "test:chrome": "npm run test -- -t browser --cov",
+    "test:chrome-webworker": "npm run test -- -t webworker",
+    "test:firefox": "npm run test -- -t browser -- --browser firefox",
+    "test:firefox-webworker": "npm run test -- -t webworker -- --browser firefox",
+    "test:node": "npm run test -- -t node --cov",
+    "test:electron-main": "npm run test -- -t electron-main",
+    "release": "semantic-release"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jacobheun/it-handshake.git"
   },
-  "files": [
-    "src",
-    "dist"
-  ],
   "keywords": [
     "async",
     "iterable",
     "iterator",
     "handshake"
   ],
-  "scripts": {
-    "test": "aegir test -t node -t browser -t webworker",
-    "test:browser": "aegir test -t browser -t webworker",
-    "test:node": "aegir test -t node",
-    "lint": "aegir lint",
-    "release": "aegir release -t node -t browser",
-    "release-minor": "aegir release --type minor -t node -t browser",
-    "release-major": "aegir release --type major -t node -t browser",
-    "build": "aegir build",
-    "coverage": "nyc --reporter=text --reporter=lcov npm run test:node"
-  },
-  "pre-push": [
-    "lint"
-  ],
   "author": "Jacob Heun",
   "license": "MIT",
   "dependencies": {
-    "it-pushable": "^1.4.0",
-    "it-reader": "^3.0.0",
-    "p-defer": "^3.0.0"
+    "it-map": "^1.0.6",
+    "it-pushable": "^2.0.1",
+    "it-reader": "^4.0.2",
+    "it-stream-types": "^1.0.4",
+    "p-defer": "^4.0.0"
   },
   "devDependencies": {
-    "aegir": "^33.0.0",
-    "it-pair": "^1.0.0",
-    "it-pipe": "^1.1.0",
-    "streaming-iterables": "^5.0.2",
-    "uint8arrays": "^2.1.4"
-  },
-  "contributors": [
-    "Jacob Heun <jacobheun@gmail.com>",
-    "Alex Potsides <alex@achingbrain.net>"
-  ]
+    "aegir": "^36.1.3",
+    "it-all": "^1.0.6",
+    "it-pair": "^2.0.2",
+    "it-pipe": "^2.0.2",
+    "uint8arrays": "^3.0.0"
+  }
 }
