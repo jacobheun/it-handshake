@@ -1,6 +1,6 @@
 # it-handshake
 
-[![Build Status](https://travis-ci.org/jacobheun/it-handshake.svg?branch=master)](https://travis-ci.org/jacobheun/it-handshake)
+[![Build Status](https://github.com/jacobheun/it-handshake/actions/workflows/js-test-and-release.yml/badge.svg?branch=master)](https://github.com/jacobheun/it-handshake/actions/workflows/js-test-and-release.yml)
 [![dependencies Status](https://david-dm.org/jacobheun/it-handshake/status.svg)](https://david-dm.org/jacobheun/it-handshake)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -14,7 +14,7 @@ npm install it-handshake
 
 ## Usage
 
-See [./example.js](./example.js)
+See [./example/index.js](./example/index.js)
 
 ## API
 
