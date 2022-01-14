@@ -2,6 +2,15 @@
   "name": "it-handshake",
   "version": "2.0.0",
   "description": "Create handshakes for binary protocols with iterable streams",
+  "homepage": "https://github.com/achingbrain/it-handshake#readme",
+  "license": "Apache-2.0 OR MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/achingbrain/it-handshake.git"
+  },
+  "bugs": {
+    "url": "https://github.com/achingbrain/it-handshake/issues"
+  },
   "type": "module",
   "types": "./dist/src/index.d.ts",
   "files": [
@@ -116,18 +125,6 @@
     "test:electron-main": "npm run test -- -t electron-main",
     "release": "semantic-release"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jacobheun/it-handshake.git"
-  },
-  "keywords": [
-    "async",
-    "iterable",
-    "iterator",
-    "handshake"
-  ],
-  "author": "Jacob Heun",
-  "license": "MIT",
   "dependencies": {
     "it-map": "^1.0.6",
     "it-pushable": "^2.0.1",
@@ -141,5 +138,12 @@
     "it-pair": "^2.0.2",
     "it-pipe": "^2.0.2",
     "uint8arrays": "^3.0.0"
-  }
+  },
+  "author": "Jacob Heun",
+  "keywords": [
+    "async",
+    "iterable",
+    "iterator",
+    "handshake"
+  ]
 }
