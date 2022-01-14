@@ -1,3 +1,19 @@
+## [3.0.0](https://github.com/jacobheun/it-handshake/compare/v2.0.0...v3.0.0) (2022-01-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* switch to named exports, ESM only
+
+### Features
+
+* convert to typescript ([#4](https://github.com/jacobheun/it-handshake/issues/4)) ([0524b18](https://github.com/jacobheun/it-handshake/commit/0524b18eac3c7ff4f30c2bc2abba78669f4b172f))
+
+
+### Trivial Changes
+
+* update repo name ([#5](https://github.com/jacobheun/it-handshake/issues/5)) ([1e0b51d](https://github.com/jacobheun/it-handshake/commit/1e0b51d2defdf38f079a00b65c0e258410e01569))
+
 # [2.0.0](https://github.com/jacobheun/it-handshake/compare/v1.0.2...v2.0.0) (2021-04-08)
 
 
@@ -24,6 +40,3 @@
 ### Features
 
 * initial implementation ([449cb61](https://github.com/jacobheun/it-handshake/commit/449cb61))
-
-
-
