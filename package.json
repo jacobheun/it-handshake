@@ -2,14 +2,14 @@
   "name": "it-handshake",
   "version": "2.0.0",
   "description": "Create handshakes for binary protocols with iterable streams",
-  "homepage": "https://github.com/achingbrain/it-handshake#readme",
+  "homepage": "https://github.com/jacobheun/it-handshake#readme",
   "license": "Apache-2.0 OR MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/achingbrain/it-handshake.git"
+    "url": "git+https://github.com/jacobheun/it-handshake.git"
   },
   "bugs": {
-    "url": "https://github.com/achingbrain/it-handshake/issues"
+    "url": "https://github.com/jacobheun/it-handshake/issues"
   },
   "type": "module",
   "types": "./dist/src/index.d.ts",
