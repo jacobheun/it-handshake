@@ -2,14 +2,25 @@
   "name": "it-handshake",
   "version": "3.0.0",
   "description": "Create handshakes for binary protocols with iterable streams",
-  "homepage": "https://github.com/jacobheun/it-handshake#readme",
+  "author": "Jacob Heun",
   "license": "Apache-2.0 OR MIT",
+  "homepage": "https://github.com/jacobheun/it-handshake#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jacobheun/it-handshake.git"
   },
   "bugs": {
     "url": "https://github.com/jacobheun/it-handshake/issues"
+  },
+  "keywords": [
+    "async",
+    "handshake",
+    "iterable",
+    "iterator"
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
   },
   "type": "module",
   "types": "./dist/src/index.d.ts",
@@ -138,12 +149,5 @@
     "it-pair": "^2.0.2",
     "it-pipe": "^2.0.2",
     "uint8arrays": "^3.0.0"
-  },
-  "author": "Jacob Heun",
-  "keywords": [
-    "async",
-    "iterable",
-    "iterator",
-    "handshake"
-  ]
+  }
 }
