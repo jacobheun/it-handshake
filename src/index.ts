@@ -11,7 +11,7 @@ export interface Handshake {
   stream: Duplex<Uint8Array>
   rest: () => Source<Uint8Array>
   write: (data: Uint8Array) => void
-  read: () => Promise<Uint8Array>
+  read: () => Promise<Uint8Array | undefined>
 }
 
 // Convert a duplex stream into a reader and writer and rest stream
@@ -53,7 +53,10 @@ export function handshake (stream: Duplex<Uint8Array>): Handshake {
     write: writer.push,
     read: async () => {
       const res = await source.next()
-      return res.value.slice()
+
+      if (res.value != null) {
+        return res.value.slice()
+      }
     }
   }
 }
