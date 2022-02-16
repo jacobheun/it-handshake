@@ -128,7 +128,7 @@
   "dependencies": {
     "it-map": "^1.0.6",
     "it-pushable": "^2.0.1",
-    "it-reader": "^4.0.2",
+    "it-reader": "^5.0.0",
     "it-stream-types": "^1.0.4",
     "p-defer": "^4.0.0"
   },
