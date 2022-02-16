@@ -1,3 +1,10 @@
+### [3.0.1](https://github.com/jacobheun/it-handshake/compare/v3.0.0...v3.0.1) (2022-02-16)
+
+
+### Bug Fixes
+
+* update deps ([#7](https://github.com/jacobheun/it-handshake/issues/7)) ([5b41352](https://github.com/jacobheun/it-handshake/commit/5b41352af195b3517c2544db78a2f465958f6cd8))
+
 ## [3.0.0](https://github.com/jacobheun/it-handshake/compare/v2.0.0...v3.0.0) (2022-01-14)
 
 
