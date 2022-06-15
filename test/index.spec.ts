@@ -1,4 +1,4 @@
-import { expect } from 'aegir/utils/chai.js'
+import { expect } from 'aegir/chai'
 import { handshake } from '../src/index.js'
 import { duplexPair } from 'it-pair/duplex'
 import { pipe } from 'it-pipe'
