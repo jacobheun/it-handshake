@@ -1,3 +1,14 @@
+## [4.0.0](https://github.com/jacobheun/it-handshake/compare/v3.0.1...v4.0.0) (2022-06-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* it-pushable types are exported as part of the public api and the default type isn't generic any more
+
+### Trivial Changes
+
+* update deps ([#20](https://github.com/jacobheun/it-handshake/issues/20)) ([ee7417d](https://github.com/jacobheun/it-handshake/commit/ee7417dec41349b86c3c721de9a7456076ff9529))
+
 ### [3.0.1](https://github.com/jacobheun/it-handshake/compare/v3.0.0...v3.0.1) (2022-02-16)
 
 
