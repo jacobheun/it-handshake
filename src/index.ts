@@ -42,7 +42,7 @@ export function handshake (stream: Duplex<Uint8Array>): Handshake {
       sourcePromise.resolve(source)
       return await sinkPromise
     },
-    source: map(source, bl => bl.slice())
+    source: source
   }
 
   return {
