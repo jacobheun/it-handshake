@@ -1,3 +1,10 @@
+## [4.0.1](https://github.com/jacobheun/it-handshake/compare/v4.0.0...v4.0.1) (2022-07-31)
+
+
+### Trivial Changes
+
+* **deps:** bump it-reader from 5.0.2 to 6.0.1 ([#24](https://github.com/jacobheun/it-handshake/issues/24)) ([596259e](https://github.com/jacobheun/it-handshake/commit/596259e4f16cbd1786d14ed65b6513c8e1255edb))
+
 ## [4.0.0](https://github.com/jacobheun/it-handshake/compare/v3.0.1...v4.0.0) (2022-06-15)
 
 
