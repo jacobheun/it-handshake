@@ -137,7 +137,6 @@
     "release": "aegir release"
   },
   "dependencies": {
-    "it-map": "^1.0.6",
     "it-pushable": "^3.0.0",
     "it-reader": "^6.0.1",
     "it-stream-types": "^1.0.4",
