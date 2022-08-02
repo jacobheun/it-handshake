@@ -16,7 +16,7 @@ export interface Handshake<T extends Uint8Array|Uint8ArrayList> {
 
 // Convert a duplex stream into a reader and writer and rest stream
 export function handshake<T extends Uint8Array|Uint8ArrayList> (stream: Duplex<T>): Handshake<T> {
-  const writer = pushable<T>({ objectMode: true }) // Write bytes on demand to the sink
+  const writer = pushable<T>() // Write bytes on demand to the sink
   const source = reader(stream.source) // Read bytes on demand from the source
 
   // Waits for a source to be passed to the rest stream's sink
