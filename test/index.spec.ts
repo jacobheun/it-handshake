@@ -4,6 +4,7 @@ import { duplexPair } from 'it-pair/duplex'
 import { pipe } from 'it-pipe'
 import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
 import all from 'it-all'
+import { Uint8ArrayList } from 'uint8arraylist'
 
 describe('handshake', () => {
   it('should be able to perform a handshake', async () => {
@@ -13,14 +14,43 @@ describe('handshake', () => {
 
     iShake.write(uint8ArrayFromString('hello'))
     let message = await rShake.read()
-    expect(message).to.eql(uint8ArrayFromString('hello'))
+    expect(message?.slice()).to.eql(uint8ArrayFromString('hello'))
     rShake.write(uint8ArrayFromString('hi'))
     rShake.rest()
     message = await iShake.read()
-    expect(message).to.eql(uint8ArrayFromString('hi'))
+    expect(message?.slice()).to.eql(uint8ArrayFromString('hi'))
     iShake.rest()
 
     const buffer = uint8ArrayFromString('more data')
+    void pipe(
+      rShake.stream,
+      (source) => (async function * () {
+        for await (const message of source) {
+          expect(message).to.eql(buffer)
+          yield message
+        }
+      })(),
+      rShake.stream
+    )
+
+    const data = await pipe([buffer], iShake.stream, async (source) => await all(source))
+    expect(data).to.eql([buffer])
+  })
+  it('should be able to perform a handshake via Uint8ArrayList', async () => {
+    const [initiator, responder] = duplexPair<Uint8ArrayList>()
+    const iShake = handshake(initiator)
+    const rShake = handshake(responder)
+
+    iShake.write(new Uint8ArrayList(uint8ArrayFromString('hello')))
+    let message = await rShake.read()
+    expect(message?.slice()).to.eql(uint8ArrayFromString('hello'))
+    rShake.write(new Uint8ArrayList(uint8ArrayFromString('hi')))
+    rShake.rest()
+    message = await iShake.read()
+    expect(message?.slice()).to.eql(uint8ArrayFromString('hi'))
+    iShake.rest()
+
+    const buffer = new Uint8ArrayList(uint8ArrayFromString('more data'))
     void pipe(
       rShake.stream,
       (source) => (async function * () {
@@ -43,11 +73,11 @@ describe('handshake', () => {
 
     iShake.write(uint8ArrayFromString('hello'))
     let message = await rShake.read()
-    expect(message).to.eql(uint8ArrayFromString('hello'))
+    expect(message?.slice()).to.eql(uint8ArrayFromString('hello'))
     rShake.write(uint8ArrayFromString('hi'))
     rShake.rest()
     message = await iShake.read()
-    expect(message).to.eql(uint8ArrayFromString('hi'))
+    expect(message?.slice()).to.eql(uint8ArrayFromString('hi'))
     iShake.rest()
 
     const iShake2 = handshake(iShake.stream)
@@ -55,11 +85,11 @@ describe('handshake', () => {
 
     iShake2.write(uint8ArrayFromString('ready?'))
     message = await rShake2.read()
-    expect(message).to.eql(uint8ArrayFromString('ready?'))
+    expect(message?.slice()).to.eql(uint8ArrayFromString('ready?'))
     rShake2.write(uint8ArrayFromString('yes!'))
     rShake2.rest()
     message = await iShake2.read()
-    expect(message).to.eql(uint8ArrayFromString('yes!'))
+    expect(message?.slice()).to.eql(uint8ArrayFromString('yes!'))
     iShake2.rest()
 
     void pipe(
@@ -87,10 +117,10 @@ describe('handshake', () => {
     // handshake before the responder finishes
     iShake.write(uint8ArrayFromString('hello'))
     message = await rShake.read()
-    expect(message).to.eql(uint8ArrayFromString('hello'))
+    expect(message?.slice()).to.eql(uint8ArrayFromString('hello'))
     rShake.write(uint8ArrayFromString('hi'))
     message = await iShake.read()
-    expect(message).to.eql(uint8ArrayFromString('hi'))
+    expect(message?.slice()).to.eql(uint8ArrayFromString('hi'))
     iShake.rest()
 
     const iShake2 = handshake(iShake.stream)
@@ -100,11 +130,11 @@ describe('handshake', () => {
     const rShake2 = handshake(rShake.stream)
 
     message = await rShake2.read()
-    expect(message).to.eql(uint8ArrayFromString('ready?'))
+    expect(message?.slice()).to.eql(uint8ArrayFromString('ready?'))
     rShake2.write(uint8ArrayFromString('yes!'))
     rShake2.rest()
     message = await iShake2.read()
-    expect(message).to.eql(uint8ArrayFromString('yes!'))
+    expect(message?.slice()).to.eql(uint8ArrayFromString('yes!'))
     iShake2.rest()
 
     void pipe(
