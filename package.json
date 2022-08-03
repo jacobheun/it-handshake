@@ -1,6 +1,6 @@
 {
   "name": "it-handshake",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Create handshakes for binary protocols with iterable streams",
   "author": "Jacob Heun",
   "license": "Apache-2.0 OR MIT",

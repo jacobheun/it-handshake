@@ -1,3 +1,10 @@
+## [4.1.0](https://github.com/jacobheun/it-handshake/compare/v4.0.1...v4.1.0) (2022-08-03)
+
+
+### Features
+
+* support Uint8ArrayList ([#26](https://github.com/jacobheun/it-handshake/issues/26)) ([0fc8e5d](https://github.com/jacobheun/it-handshake/commit/0fc8e5d8e81c53fa9bb381b283387bfe22779a37))
+
 ## [4.0.1](https://github.com/jacobheun/it-handshake/compare/v4.0.0...v4.0.1) (2022-07-31)
 
 
