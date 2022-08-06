@@ -5,22 +5,24 @@ import type { Duplex, Source } from 'it-stream-types'
 import type { Pushable } from 'it-pushable'
 import type { Uint8ArrayList } from 'uint8arraylist'
 
-export interface Handshake<T extends Uint8Array | Uint8ArrayList = Uint8Array> {
+type Bytes = Uint8Array | Uint8ArrayList
+
+export interface Handshake<TSource extends Bytes, TSink extends Bytes = TSource> {
   reader: Reader
-  writer: Pushable<T>
-  stream: Duplex<T>
-  rest: () => Source<T>
-  write: (data: T) => void
+  writer: Pushable<TSink>
+  stream: Duplex<TSource, TSink>
+  rest: () => Source<TSink>
+  write: (data: TSink) => void
   read: () => Promise<Uint8ArrayList | undefined>
 }
 
 // Convert a duplex stream into a reader and writer and rest stream
-export function handshake<T extends Uint8Array | Uint8ArrayList = Uint8Array> (stream: Duplex<T>): Handshake<T> {
-  const writer = pushable<T>() // Write bytes on demand to the sink
+export function handshake<TSource extends Bytes, TSink extends Bytes = TSource> (stream: Duplex<TSource, TSink>): Handshake<TSource, TSink> {
+  const writer = pushable<TSink>() // Write bytes on demand to the sink
   const source = reader(stream.source) // Read bytes on demand from the source
 
   // Waits for a source to be passed to the rest stream's sink
-  const sourcePromise = defer<Source<T>>()
+  const sourcePromise = defer<Source<TSink>>()
   let sinkErr: Error
 
   const sinkPromise = stream.sink((async function * () {
@@ -33,7 +35,7 @@ export function handshake<T extends Uint8Array | Uint8ArrayList = Uint8Array> (s
     sinkErr = err
   })
 
-  const rest: Duplex<T> = {
+  const rest: Duplex<TSource, TSink> = {
     sink: async source => {
       if (sinkErr != null) {
         return await Promise.reject(sinkErr)
