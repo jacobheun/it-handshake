@@ -5,9 +5,7 @@ import type { Duplex, Source } from 'it-stream-types'
 import type { Pushable } from 'it-pushable'
 import type { Uint8ArrayList } from 'uint8arraylist'
 
-type Bytes = Uint8Array | Uint8ArrayList
-
-export interface Handshake<TSource extends Bytes = Uint8Array, TSink extends Bytes = TSource> {
+export interface Handshake<TSource extends Uint8Array | Uint8ArrayList = Uint8Array, TSink extends Uint8Array | Uint8ArrayList = TSource> {
   reader: Reader
   writer: Pushable<TSink>
   stream: Duplex<TSource, TSink>
@@ -17,7 +15,7 @@ export interface Handshake<TSource extends Bytes = Uint8Array, TSink extends Byt
 }
 
 // Convert a duplex stream into a reader and writer and rest stream
-export function handshake<TSource extends Bytes = Uint8Array, TSink extends Bytes = TSource> (stream: Duplex<TSource, TSink>): Handshake<TSource, TSink> {
+export function handshake<TSource extends Uint8Array | Uint8ArrayList = Uint8Array, TSink extends Uint8Array | Uint8ArrayList = TSource> (stream: Duplex<TSource, TSink>): Handshake<TSource, TSink> {
   const writer = pushable<TSink>() // Write bytes on demand to the sink
   const source = reader(stream.source) // Read bytes on demand from the source
 
