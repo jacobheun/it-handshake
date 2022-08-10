@@ -1,3 +1,10 @@
+## [4.1.1](https://github.com/jacobheun/it-handshake/compare/v4.1.0...v4.1.1) (2022-08-10)
+
+
+### Bug Fixes
+
+* support streams with different sink and source types ([#28](https://github.com/jacobheun/it-handshake/issues/28)) ([cc1bac4](https://github.com/jacobheun/it-handshake/commit/cc1bac43dacdb50785ea6934dd5977e42d46f206))
+
 ## [4.1.0](https://github.com/jacobheun/it-handshake/compare/v4.0.1...v4.1.0) (2022-08-03)
 
 
