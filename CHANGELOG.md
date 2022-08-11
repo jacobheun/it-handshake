@@ -1,3 +1,10 @@
+## [4.1.2](https://github.com/jacobheun/it-handshake/compare/v4.1.1...v4.1.2) (2022-08-11)
+
+
+### Bug Fixes
+
+* correct return type ([#29](https://github.com/jacobheun/it-handshake/issues/29)) ([50baa15](https://github.com/jacobheun/it-handshake/commit/50baa15f9f70cac2591427d645a727379d71cd7a))
+
 ## [4.1.1](https://github.com/jacobheun/it-handshake/compare/v4.1.0...v4.1.1) (2022-08-10)
 
 
