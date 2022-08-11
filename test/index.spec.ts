@@ -26,15 +26,15 @@ describe('handshake', () => {
       rShake.stream,
       (source) => (async function * () {
         for await (const message of source) {
-          expect(message).to.eql(buffer)
-          yield message
+          expect(message.subarray()).to.eql(buffer)
+          yield message.subarray()
         }
       })(),
       rShake.stream
     )
 
     const data = await pipe([buffer], iShake.stream, async (source) => await all(source))
-    expect(data).to.eql([buffer])
+    expect(data[0].subarray()).to.eql(buffer)
   })
   it('should be able to perform a handshake via Uint8ArrayList', async () => {
     const [initiator, responder] = duplexPair<Uint8ArrayList>()
@@ -96,7 +96,7 @@ describe('handshake', () => {
       rShake2.stream,
       (source) => (async function * () {
         for await (const message of source) {
-          yield message
+          yield message.subarray()
         }
       })(),
       rShake2.stream
@@ -104,7 +104,7 @@ describe('handshake', () => {
 
     const buffer = uint8ArrayFromString('more data')
     const data = await pipe([buffer], iShake2.stream, async (source) => await all(source))
-    expect(data).to.eql([buffer])
+    expect(data[0].subarray()).to.eql(buffer)
   })
 
   it('should persist data across handshakes', async () => {
@@ -141,7 +141,7 @@ describe('handshake', () => {
       rShake2.stream,
       (source) => (async function * () {
         for await (const message of source) {
-          yield message
+          yield message.subarray()
         }
       })(),
       rShake2.stream
@@ -149,7 +149,7 @@ describe('handshake', () => {
 
     const buffer = uint8ArrayFromString('more data')
     const data = await pipe([buffer], iShake2.stream, async (source) => await all(source))
-    expect(data).to.have.nested.property('[0]').that.equalBytes(buffer)
+    expect(data[0].subarray()).to.eql(buffer)
   })
 
   it('should survive an exploding sink while doing other async work', async () => {
