@@ -146,7 +146,7 @@
   },
   "devDependencies": {
     "aegir": "^37.2.0",
-    "it-all": "^1.0.6",
+    "it-all": "^2.0.1",
     "it-pair": "^2.0.2",
     "it-pipe": "^2.0.2",
     "uint8arrays": "^3.0.0"
