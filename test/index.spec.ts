@@ -37,7 +37,7 @@ describe('handshake', () => {
     expect(data[0].subarray()).to.eql(buffer)
   })
   it('should be able to perform a handshake via Uint8ArrayList', async () => {
-    const [initiator, responder] = duplexPair<Uint8ArrayList>()
+    const [initiator, responder] = duplexPair<Uint8ArrayList | Uint8Array>()
     const iShake = handshake(initiator)
     const rShake = handshake(responder)
 
@@ -157,7 +157,9 @@ describe('handshake', () => {
       sink: async () => { // eslint-disable-line require-await
         throw new Error('Oh noes!')
       },
-      source: []
+      source: async function * () {
+
+      }()
     })
 
     // make sure the microtask queue is emptied

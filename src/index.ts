@@ -8,14 +8,14 @@ import type { Uint8ArrayList } from 'uint8arraylist'
 export interface Handshake<TSink = Uint8Array | Uint8ArrayList> {
   reader: Reader
   writer: Pushable<TSink>
-  stream: Duplex<Uint8ArrayList, TSink>
+  stream: Duplex<AsyncIterable<Uint8ArrayList | Uint8Array>, Source<TSink>, Promise<void>>
   rest: () => Source<TSink>
   write: (data: TSink) => void
   read: () => Promise<Uint8ArrayList | undefined>
 }
 
 // Convert a duplex stream into a reader and writer and rest stream
-export function handshake<TSink extends Uint8ArrayList | Uint8Array = Uint8ArrayList> (stream: Duplex<Uint8ArrayList | Uint8Array, TSink>): Handshake<TSink> {
+export function handshake<TSink extends Uint8ArrayList | Uint8Array = Uint8ArrayList> (stream: Duplex<AsyncIterable<Uint8ArrayList | Uint8Array>, Source<TSink>, Promise<void>>): Handshake<TSink> {
   const writer = pushable<TSink>() // Write bytes on demand to the sink
   const source = reader(stream.source) // Read bytes on demand from the source
 
@@ -33,7 +33,7 @@ export function handshake<TSink extends Uint8ArrayList | Uint8Array = Uint8Array
     sinkErr = err
   })
 
-  const rest: Duplex<Uint8ArrayList, TSink> = {
+  const rest: Duplex<AsyncIterable<Uint8ArrayList>, Source<TSink>, Promise<void>> = {
     sink: async source => {
       if (sinkErr != null) {
         return await Promise.reject(sinkErr)
