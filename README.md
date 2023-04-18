@@ -1,20 +1,40 @@
-# it-handshake
+# it-handshake <!-- omit in toc -->
 
-[![Build Status](https://github.com/jacobheun/it-handshake/actions/workflows/js-test-and-release.yml/badge.svg?branch=master)](https://github.com/jacobheun/it-handshake/actions/workflows/js-test-and-release.yml)
-[![dependencies Status](https://david-dm.org/jacobheun/it-handshake/status.svg)](https://david-dm.org/jacobheun/it-handshake)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![codecov](https://img.shields.io/codecov/c/github/jacobheun/it-handshake.svg?style=flat-square)](https://codecov.io/gh/jacobheun/it-handshake)
+[![CI](https://img.shields.io/github/actions/workflow/status/jacobheun/it-handshake/js-test-and-release.yml?branch=master\&style=flat-square)](https://github.com/jacobheun/it-handshake/actions/workflows/js-test-and-release.yml?query=branch%3Amaster)
 
-> Create handshakes for binary protocols with iterable streams.
+> Create handshakes for binary protocols with iterable streams
+
+## Table of contents <!-- omit in toc -->
+
+- [Install](#install)
+  - [Browser `<script>` tag](#browser-script-tag)
+- [API](#api)
+  - [`handshake(duplex)`](#handshakeduplex)
+  - [`shake.write(message)`](#shakewritemessage)
+  - [`shake.read()`](#shakeread)
+  - [`shake.rest()`](#shakerest)
+  - [`shake.stream`](#shakestream)
+  - [`shake.reader`](#shakereader)
+  - [`shake.writer`](#shakewriter)
+- [Related](#related)
+- [API Docs](#api-docs)
+- [License](#license)
+- [Contribution](#contribution)
 
 ## Install
 
-```sh
-npm install it-handshake
+```console
+$ npm i it-handshake
 ```
 
-## Usage
+### Browser `<script>` tag
 
-See [./example/index.js](./example/index.js)
+Loading this module through a script tag will make it's exports available as `ItHandshake` in the global namespace.
+
+```html
+<script src="https://unpkg.com/it-handshake/dist/index.min.js"></script>
+```
 
 ## API
 
@@ -55,5 +75,17 @@ The underyling writer, [it-pushable](https://github.com/alanshaw/it-pushable), u
 - [it-pair](https://github.com/alanshaw/it-pair)
 - [it-pipe](https://github.com/alanshaw/it-pipe)
 
+## API Docs
+
+- <https://jacobheun.github.io/it-handshake>
+
 ## License
-[MIT](LICENSE) © Jacob Heun
+
+Licensed under either of
+
+- Apache 2.0, ([LICENSE-APACHE](LICENSE-APACHE) / <http://www.apache.org/licenses/LICENSE-2.0>)
+- MIT ([LICENSE-MIT](LICENSE-MIT) / <http://opensource.org/licenses/MIT>)
+
+## Contribution
+
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.
