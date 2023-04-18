@@ -157,9 +157,9 @@ describe('handshake', () => {
       sink: async () => { // eslint-disable-line require-await
         throw new Error('Oh noes!')
       },
-      source: async function * () {
+      source: (async function * () {
 
-      }()
+      }())
     })
 
     // make sure the microtask queue is emptied

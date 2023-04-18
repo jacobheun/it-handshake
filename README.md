@@ -9,7 +9,6 @@
 
 - [Install](#install)
   - [Browser `<script>` tag](#browser-script-tag)
-- [Usage](#usage)
 - [API](#api)
   - [`handshake(duplex)`](#handshakeduplex)
   - [`shake.write(message)`](#shakewritemessage)
@@ -36,10 +35,6 @@ Loading this module through a script tag will make it's exports available as `It
 ```html
 <script src="https://unpkg.com/it-handshake/dist/index.min.js"></script>
 ```
-
-## Usage
-
-See [./example/index.js](./example/index.js)
 
 ## API
 
