@@ -19,6 +19,7 @@
   - [`shake.reader`](#shakereader)
   - [`shake.writer`](#shakewriter)
 - [Related](#related)
+- [API Docs](#api-docs)
 - [License](#license)
 - [Contribution](#contribution)
 
@@ -78,6 +79,10 @@ The underyling writer, [it-pushable](https://github.com/alanshaw/it-pushable), u
 - [it-pushable](https://github.com/alanshaw/it-pushable)
 - [it-pair](https://github.com/alanshaw/it-pair)
 - [it-pipe](https://github.com/alanshaw/it-pipe)
+
+## API Docs
+
+- <https://jacobheun.github.io/it-handshake>
 
 ## License
 
