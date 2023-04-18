@@ -1,3 +1,10 @@
+## [4.1.3](https://github.com/jacobheun/it-handshake/compare/v4.1.2...v4.1.3) (2023-04-18)
+
+
+### Dependencies
+
+* update all it-* deps and aegir ([#57](https://github.com/jacobheun/it-handshake/issues/57)) ([e133b14](https://github.com/jacobheun/it-handshake/commit/e133b14ee55ff315ad3b24d31e5fe42acf994d02))
+
 ## [4.1.2](https://github.com/jacobheun/it-handshake/compare/v4.1.1...v4.1.2) (2022-08-11)
 
 
